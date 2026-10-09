@@ -117,13 +117,8 @@ oneTimeSetUp() {
     sudo raspi-config nonint do_i2c 0 >/dev/null 2>&1
   fi
 
-  # Old libgpiod
-  if [ ! -f /usr/bin/libgpiod.so.2 ]
-  then
-    [ $OUTPUT_JSON -eq 0 ] && echo "${COLOR_INFO}Copying libgpiod.so.2 to /usr/bin/${COLOR_END}"
-    sudo cp tools/libgpiod.so.2 /usr/bin/ >/dev/null 2>&1
-    sudo ldconfig >/dev/null 2>&1
-  fi
+  # ads1115, pcf8563 and sx1262 load tools/libgpiod.so.2 via $ORIGIN.
+  # Do not copy it onto the system library path.
 
   # Setup Python virtual environment and install dependencies (only for sensors without compiled tools)
   pythonEnvSetup

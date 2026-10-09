@@ -71,13 +71,8 @@ oneTimeSetUp() {
     sudo raspi-config nonint do_i2c 0
   fi
 
-  # Old libgpiod
-  if [ ! -f /usr/bin/libgpiod.so.2 ]
-  then
-    echo "${COLOR_INFO}Copying libgpiod.so.2 to /usr/bin/${COLOR_END}"
-    sudo cp tools/libgpiod.so.2 /usr/bin/
-    sudo ldconfig
-  fi
+  # ads1115, pcf8563 and sx1262 load tools/libgpiod.so.2 via $ORIGIN.
+  # Do not copy it onto the system library path.
 
   # info
   systemInfo
